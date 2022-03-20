@@ -20,14 +20,14 @@ def test_unfolded(compiled_func):
     b = jax.numpy.array(rand(1000))
     c = jax.numpy.array(rand(1000))
 
-    return compiled_func(a, b, c, jax.numpy.zeros(1000), jax.numpy.ones(1000))
+    return compiled_func(a, b, c, jax.numpy.zeros(1000), jax.numpy.ones(1000)).block_until_ready()
 
 def test_folded(compiled_func):
     a = jax.numpy.array(rand(1000))
     b = jax.numpy.array(rand(1000))
     c = jax.numpy.array(rand(1000))
     variate = a + b * c
-    return compiled_func(variate, jax.numpy.zeros(1000), jax.numpy.ones(1000))
+    return compiled_func(variate, jax.numpy.zeros(1000), jax.numpy.ones(1000)).block_until_ready()
 
 
 compiled_unfolded = jax.jit(jax_normal_lp_unfolded)
